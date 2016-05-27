@@ -6,6 +6,8 @@ module FontAwesome
 
         if rails?
           register_rails_engine
+        elsif hanami?
+          register_hanami
         elsif sprockets?
           register_sprockets
         end
@@ -42,6 +44,10 @@ module FontAwesome
         defined?(::Rails)
       end
 
+      def hanami?
+        defined?(::Hanami)
+      end
+
       private
 
       def configure_sass
@@ -66,6 +72,10 @@ module FontAwesome
         require 'sass-rails'
         require 'font_awesome/sass/rails/engine'
         require 'font_awesome/sass/rails/railtie'
+      end
+
+      def register_hanami
+        ::Hanami::Assets.sources << assets_path
       end
 
       def register_sprockets
